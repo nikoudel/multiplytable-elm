@@ -1,7 +1,13 @@
 {
   "name": "multiplytable-elm",
   "scripts": {
-    "build": "elm-make src/Main.elm --output dist/elm.js",
-    "test": "elm-make src/Tests.elm --output tests.js && node tests.js"
+    "build": "elm make src/Main.elm --output dist/main.js",
+    "build-prod": "elm make src/Main.elm --output dist/main.js --optimize",
+    "test": "elm make src/Tests.elm --output tests.js && node tests.js"
+  },
+  "devDependencies": {
+    "elm": "^0.19.1-5",
+    "elm-format": "^0.8.5",
+    "elm-test": "^0.19.1-revision7"
   }
 }
