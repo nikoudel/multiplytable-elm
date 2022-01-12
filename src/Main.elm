@@ -1,76 +1,76 @@
-port module Main exposing (main, update)
+module Main exposing (..)
 
-import Html.App
-import View exposing (view)
-import Model exposing (..)
-import AppLogic exposing (..)
-import Time exposing (Time, second)
-import Array exposing (..)
+import AppLogic as L
+import Browser
+import Model as M
+import Time
+import View
 
-main : Program (Maybe Model)
-main = Html.App.programWithFlags
-  {
-    init = init,
-    view = View.view,
-    update = update,
-    subscriptions = subscriptions
-  }
 
-port setStorage : Model -> Cmd msg
-port focus : String -> Cmd msg
+main : Program (Maybe M.Model) M.Model M.Msg
+main =
+    Browser.element
+        { init = init
+        , view = View.view
+        , update = update
+        , subscriptions = subscriptions
+        }
 
-subscriptions : Model -> Sub Msg
-subscriptions model =
-  Time.every second (\t -> Tick)
 
-init : Maybe Model -> (Model, Cmd Msg)
+subscriptions : M.Model -> Sub M.Msg
+subscriptions _ =
+    Time.every 1000 (\_ -> M.Tick)
+
+
+init : Maybe M.Model -> ( M.Model, Cmd M.Msg )
 init savedModel =
-  case savedModel of
-    Just model ->
-      if model.selectedCell < 0
-      then model |> selectCell
-      else model ! []
-    _ ->
-      emptyModel |> selectCell
+    case savedModel of
+        Just model ->
+            if model.selectedCell < 0 then
+                model |> L.selectCell
 
-update : Msg -> Model -> (Model, Cmd Msg)
+            else
+                ( model, L.focus M.theInputId )
+
+        _ ->
+            M.emptyModel |> L.selectCell
+
+
+update : M.Msg -> M.Model -> ( M.Model, Cmd M.Msg )
 update msg model =
-  case msg of
-    NoOp ->
-      model ! []
+    case msg of
+        M.NoOp ->
+            ( model, Cmd.none )
 
-    Tick ->
-      List.foldr updateCells model model.activeCells ! []
+        M.Tick ->
+            ( List.foldr L.updateCells model model.activeCells, Cmd.none )
 
-    Save ->
-      model ! [setStorage model]
+        M.Focus ->
+            ( model, Cmd.batch [ L.focus M.theInputId ] )
 
-    Focus ->
-      model ! [focus inputId]
+        M.UserInput keyCode ->
+            L.onUserInput keyCode model
 
-    UserInput keyCode ->
-      onUserInput keyCode model
+        M.ToggleMode ->
+            ( L.toggleMode model, Cmd.none ) |> L.save
 
-    ToggleMode ->
-      toggleMode model ! [] |> save
+        M.ResetModel ->
+            L.selectCell M.emptyModel |> L.save
 
-    ResetModel ->
-      selectCell emptyModel |> save
+        M.ResetDown ->
+            ( { model | resetPressed = True }, Cmd.none )
 
-    ResetDown ->
-      { model | resetPressed = True } ! []
+        M.ResetUp ->
+            ( { model | resetPressed = False }, Cmd.none )
 
-    ResetUp ->
-      { model | resetPressed = False } ! []
+        M.ToggleCheckbox index ->
+            L.toggleCheckbox index model |> L.save
 
-    ToggleCheckbox index ->
-      toggleCheckbox index model |> save
+        M.SelectCell indexOfNextCellToSelect ->
+            model |> L.selectNewCell indexOfNextCellToSelect
 
-    SelectCell indexOfNextCellToSelect ->
-      model |> selectNewCell indexOfNextCellToSelect
+        M.MouseEnter index ->
+            ( model |> L.mouseEnter index, Cmd.none )
 
-    MouseEnter index ->
-      (model |> mouseEnter index) ! []
-
-    MouseLeave index ->
-      (model |> mouseLeave index) ! []
+        M.MouseLeave index ->
+            ( model |> L.mouseLeave index, Cmd.none )

@@ -3,29 +3,31 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>kertotaulu.tk</title>
-  <script type="text/javascript" src="elm.js"></script>
+  <title>Main</title>
+  <script src="main.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body></body>
+<body>
+  <div id="elm-host"></div>
+  <script>
+    const storedState = localStorage.getItem('multiplytable-elm');
 
-<script type="text/javascript">
+    const app = Elm.Main.init({
+      node: document.getElementById("elm-host"),
+      flags: storedState ? JSON.parse(storedState) : null
+    });
 
-var storedState = localStorage.getItem('multiplytable-elm');
-var startingState = storedState ? JSON.parse(storedState) : null;
-var todomvc = Elm.Main.fullscreen(startingState);
-
-todomvc.ports.focus.subscribe(function(id) {
-    setTimeout(function() {
+    app.ports.focus.subscribe(function (id) {
+      setTimeout(function () {
         document.getElementById(id).focus();
-    }, 50);
-});
+      }, 50);
+    });
 
-todomvc.ports.setStorage.subscribe(function(state) {
-    localStorage.setItem('multiplytable-elm', JSON.stringify(state));
-});
-
-</script>
+    app.ports.setStorage.subscribe(function (state) {
+      localStorage.setItem('multiplytable-elm', JSON.stringify(state));
+    });
+  </script>
+</body>
 
 </html>

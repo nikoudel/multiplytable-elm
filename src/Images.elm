@@ -1,14 +1,14 @@
-port module Images exposing (getImage)
+module Images exposing (getImage)
 
 import Dict
+
+
 
 -- http://www.iconarchive.com/show/shrek-icons-by-majdi-khawaja.html
 -- http://www.iconarchive.com/show/rio-icons-by-majdi-khawaja.html
 -- http://www.iconarchive.com/show/ice-age-icons-by-majdi-khawaja.html
 -- http://www.iconarchive.com/show/kung-fu-panda-icons-by-majdi-khawaja.html
 -- http://www.iconarchive.com/show/madagascar-icons-by-majdi-khawaja.html
-
-
 -- "Alex-2-icon.png","Alex-3-icon.png","Alex-and-Marty-2-icon.png","Alex-and-Marty-icon.png",
 -- "Alex-icon.png","Blue-2-icon.png","Blue-3-icon.png","Blue-icon.png","Blue-young-icon.png","Buck-icon.png",
 -- "Crane-icon.png","Crash-and-Eddie-icon.png","Diego-2-icon.png","Diego-icon.png","Donkey-2-icon.png",
@@ -24,50 +24,63 @@ import Dict
 -- "Sid-icon.png","Skipper-icon.png","Tai-Lung-2-icon.png","Tai-Lung-icon.png","The-Gorillas-icon.png","Tigress-2-icon.png",
 -- "Tigress-3-icon.png","Tigress-icon.png","Viper-icon.png","Wolf-and-Pigs-icon.png","Wolf-Boss-icon.png"
 
-getImage row col =
-  let
-    x = min row col + 1
-    y = max row col + 1
-  in
-    "/images/" ++
-    case images |> Dict.get (x, y) of
-      Just image -> image
-      _ -> "sad.png"
 
-images = Dict.fromList [
-  ((2, 2), "Penguins-icon.png"),
-  ((2, 3), "Melman-3-icon.png"),
-  ((2, 4), "Master-Shifu-2-icon.png"),
-  ((2, 5), "King-Julian-icon.png"),
-  ((2, 6), "Fiona-3-icon.png"),
-  ((2, 7), "Sid-icon.png"),
-  ((2, 8), "Tigress-2-icon.png"),
-  ((2, 9), "Wolf-Boss-icon.png"),
-  ((3, 3), "Po-3-icon.png"),
-  ((3, 4), "Shrek-and-Donkey-and-Puss-2-icon.png"),
-  ((3, 5), "The-Gorillas-icon.png"),
-  ((3, 6), "Diego-2-icon.png"),
-  ((3, 7), "Blue-2-icon.png"),
-  ((3, 8), "Alex-and-Marty-2-icon.png"),
-  ((3, 9), "Gloria-icon.png"),
-  ((4, 4), "Donkey-icon.png"),
-  ((4, 5), "Master-Shifu-icon.png"),
-  ((4, 6), "Marty-2-icon.png"),
-  ((4, 7), "Peaches-icon.png"),
-  ((4, 8), "Wolf-and-Pigs-icon.png"),
-  ((4, 9), "Tigress-icon.png"),
-  ((5, 5), "Scrat-2-icon.png"),
-  ((5, 6), "Blue-young-icon.png"),
-  ((5, 7), "Alex-icon.png"),
-  ((5, 8), "Shrek-icon.png"),
-  ((5, 9), "Nigel-icon.png"),
-  ((6, 6), "Rafael-icon.png"),
-  ((6, 7), "Puss-3-icon.png"),
-  ((6, 8), "Skipper-icon.png"),
-  ((6, 9), "Manny-icon.png"),
-  ((7, 7), "Tigress-3-icon.png"),
-  ((7, 8), "Po-icon.png"),
-  ((7, 9), "Diego-icon.png"),
-  ((8, 8), "Shrek-and-Donkey-and-Puss-icon.png"),
-  ((8, 9), "Jewel-icon.png"),
-  ((9, 9), "Blue-3-icon.png")]
+getImage : number -> number -> String
+getImage row col =
+    let
+        x =
+            min row col + 1
+
+        y =
+            max row col + 1
+    in
+    "/images/"
+        ++ (case images |> Dict.get ( x, y ) of
+                Just image ->
+                    image
+
+                _ ->
+                    "sad.png"
+           )
+
+
+images : Dict.Dict ( number, number ) String
+images =
+    Dict.fromList
+        [ ( ( 2, 2 ), "Penguins-icon.png" )
+        , ( ( 2, 3 ), "Melman-3-icon.png" )
+        , ( ( 2, 4 ), "Master-Shifu-2-icon.png" )
+        , ( ( 2, 5 ), "King-Julian-icon.png" )
+        , ( ( 2, 6 ), "Fiona-3-icon.png" )
+        , ( ( 2, 7 ), "Sid-icon.png" )
+        , ( ( 2, 8 ), "Tigress-2-icon.png" )
+        , ( ( 2, 9 ), "Wolf-Boss-icon.png" )
+        , ( ( 3, 3 ), "Po-3-icon.png" )
+        , ( ( 3, 4 ), "Shrek-and-Donkey-and-Puss-2-icon.png" )
+        , ( ( 3, 5 ), "The-Gorillas-icon.png" )
+        , ( ( 3, 6 ), "Diego-2-icon.png" )
+        , ( ( 3, 7 ), "Blue-2-icon.png" )
+        , ( ( 3, 8 ), "Alex-and-Marty-2-icon.png" )
+        , ( ( 3, 9 ), "Gloria-icon.png" )
+        , ( ( 4, 4 ), "Donkey-icon.png" )
+        , ( ( 4, 5 ), "Master-Shifu-icon.png" )
+        , ( ( 4, 6 ), "Marty-2-icon.png" )
+        , ( ( 4, 7 ), "Peaches-icon.png" )
+        , ( ( 4, 8 ), "Wolf-and-Pigs-icon.png" )
+        , ( ( 4, 9 ), "Tigress-icon.png" )
+        , ( ( 5, 5 ), "Scrat-2-icon.png" )
+        , ( ( 5, 6 ), "Blue-young-icon.png" )
+        , ( ( 5, 7 ), "Alex-icon.png" )
+        , ( ( 5, 8 ), "Shrek-icon.png" )
+        , ( ( 5, 9 ), "Nigel-icon.png" )
+        , ( ( 6, 6 ), "Rafael-icon.png" )
+        , ( ( 6, 7 ), "Puss-3-icon.png" )
+        , ( ( 6, 8 ), "Skipper-icon.png" )
+        , ( ( 6, 9 ), "Manny-icon.png" )
+        , ( ( 7, 7 ), "Tigress-3-icon.png" )
+        , ( ( 7, 8 ), "Po-icon.png" )
+        , ( ( 7, 9 ), "Diego-icon.png" )
+        , ( ( 8, 8 ), "Shrek-and-Donkey-and-Puss-icon.png" )
+        , ( ( 8, 9 ), "Jewel-icon.png" )
+        , ( ( 9, 9 ), "Blue-3-icon.png" )
+        ]
