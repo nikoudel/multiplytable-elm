@@ -3,11 +3,13 @@
   "scripts": {
     "build": "elm make src/Main.elm --output dist/main.js",
     "build-prod": "elm make src/Main.elm --output dist/main.js --optimize",
+    "server": "npm run build && http-server dist",
     "test": "elm make src/Tests.elm --output tests.js && node tests.js"
   },
   "devDependencies": {
     "elm": "^0.19.1-5",
     "elm-format": "^0.8.5",
-    "elm-test": "^0.19.1-revision7"
+    "elm-test": "^0.19.1-revision7",
+    "http-server": "^14.1.0"
   }
 }

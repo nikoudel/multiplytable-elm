@@ -1,16 +1,33 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Main</title>
   <script src="main.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div id="elm-host"></div>
   <script>
-    Elm.Main.init({
-        node: document.getElementById("elm-host")
+    const storedState = localStorage.getItem('multiplytable-elm');
+
+    const app = Elm.Main.init({
+      node: document.getElementById("elm-host"),
+      flags: storedState ? JSON.parse(storedState) : null
+    });
+
+    app.ports.focus.subscribe(function (id) {
+      setTimeout(function () {
+        document.getElementById(id).focus();
+      }, 50);
+    });
+
+    app.ports.setStorage.subscribe(function (state) {
+      localStorage.setItem('multiplytable-elm', JSON.stringify(state));
     });
   </script>
 </body>
+
 </html>
