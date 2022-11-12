@@ -1,1 +1,1 @@
-Multiplication table [game](https://osote.fi) implemented with Elm.
+Multiplication table [game](https://bitfix.fi) implemented with Elm.
