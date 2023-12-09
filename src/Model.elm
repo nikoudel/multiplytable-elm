@@ -69,6 +69,8 @@ type alias Model =
     , selectedCell : Int
     , hoveredCell : Int
     , activeCells : List Int
+
+    -- , debugText : Maybe String
     }
 
 
@@ -99,6 +101,8 @@ emptyModel =
     , selectedCell = -1
     , hoveredCell = -1
     , activeCells = []
+
+    -- , debugText = Nothing
     }
 
 

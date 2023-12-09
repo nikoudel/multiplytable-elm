@@ -12,6 +12,7 @@ import Model exposing (..)
 view : Model -> Html Msg
 view model =
     div []
+        -- [ h3 [ id "debug" ] [ Maybe.withDefault "" model.debugText |> text ]
         [ div [ id "main" ]
             [ div [ id "grid" ] [ viewTable model.cells ]
             , div [ id "input" ] [ viewInput model ]

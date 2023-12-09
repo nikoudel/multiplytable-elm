@@ -290,10 +290,25 @@ toggleCheckbox cbIndex model =
             if model.selectedCell < 0 then
                 selectCell
 
+            else if isCheckboxForCurrentRow cbIndex model then
+                \m ->
+                    updateCell m.selectedCell
+                        (\cell ->
+                            { cell | state = state.initial, imageHidden = True }
+                        )
+                        m
+                        |> deselectCurrentCell
+                        |> selectCell
+
             else
                 \m -> ( m, Cmd.none )
     in
     { model | checkboxes = checkboxes, cells = cells } |> afterToggle
+
+
+isCheckboxForCurrentRow : Int -> Model -> Bool
+isCheckboxForCurrentRow cbIndex model =
+    (model.selectedCell // 9) - 1 == cbIndex
 
 
 mouseEnter : Int -> Model -> Model
@@ -362,8 +377,6 @@ resetImageUrl model =
 
 split : Int -> List (List a) -> List a -> List (List a)
 split chunkSize aggregate items =
-    -- if chunkSize <= 0 then
-    --     Debug.crash "chunkSize must be > 0"
     case items of
         [] ->
             List.reverse aggregate
