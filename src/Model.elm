@@ -51,7 +51,6 @@ type Msg
     | ToggleMode
     | ResetModel
     | ResetDown
-    | ResetUp
     | ToggleCheckbox Int
     | SelectCell Int
     | MouseEnter Int

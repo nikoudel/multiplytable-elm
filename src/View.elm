@@ -22,10 +22,9 @@ view model =
                 [ img [ src (modeImageUrl model), onClick ToggleMode ] []
                 , img
                     [ src (resetImageUrl model)
-                    , onClick ResetModel
                     , onMouseDown ResetDown
-                    , onMouseUp ResetUp
-                    , onDragEnd ResetUp
+                    , onMouseUp ResetModel
+                    , onDragEnd ResetModel
                     ]
                     []
                 , h1 [ class (errorCountClass model) ] [ text (model.errorCount |> String.fromInt) ]

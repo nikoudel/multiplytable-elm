@@ -60,9 +60,6 @@ update msg model =
         M.ResetDown ->
             ( { model | resetPressed = True }, Cmd.none )
 
-        M.ResetUp ->
-            ( { model | resetPressed = False }, Cmd.none )
-
         M.ToggleCheckbox index ->
             L.toggleCheckbox index model |> L.save
 
