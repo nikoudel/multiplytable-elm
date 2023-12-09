@@ -44,7 +44,7 @@ onTick cell model =
         { model | activeCells = List.filter (\i -> i /= cell.index) model.activeCells }
             |> updateCell cell.index
                 (\c ->
-                    { c | state = state.done, imageSrc = c.cartoon, imageHidden = False }
+                    { c | state = state.done, imageSrc = image.happy, imageHidden = False }
                 )
 
     else
@@ -225,21 +225,6 @@ getRealIndex cellIndex model =
 
         _ ->
             -1
-
-
-getCartoon : Model -> Maybe { header : String, image : String }
-getCartoon model =
-    case model.cells |> Array.get model.selectedCell of
-        Just cell ->
-            Just { header = getHeader cell model.multiplicationMode, image = cell.cartoon }
-
-        _ ->
-            case model.cells |> Array.get model.hoveredCell of
-                Just cell ->
-                    Just { header = "", image = cell.cartoon }
-
-                _ ->
-                    Nothing
 
 
 getHeader : Cell -> Bool -> String

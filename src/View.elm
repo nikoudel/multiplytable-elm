@@ -30,7 +30,6 @@ view model =
                 , h1 [ class (errorCountClass model) ] [ text (model.errorCount |> String.fromInt) ]
                 , div [] (List.indexedMap checkboxToHtml (Array.toList model.checkboxes))
                 ]
-            , div [ id "cartoon" ] (viewCartoon model)
             ]
         ]
 
@@ -103,15 +102,3 @@ onDragEnd msg =
 onKeyDown : (Int -> Msg) -> Attribute Msg
 onKeyDown tagger =
     on "keydown" (Json.map tagger keyCode)
-
-
-viewCartoon : Model -> List (Html Msg)
-viewCartoon model =
-    case getCartoon model of
-        Just cartoon ->
-            [ h1 [] [ text cartoon.header ]
-            , img [ src cartoon.image ] []
-            ]
-
-        _ ->
-            []

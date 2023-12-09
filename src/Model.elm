@@ -1,7 +1,6 @@
 module Model exposing (..)
 
 import Array exposing (..)
-import Images exposing (..)
 
 
 theInputId =
@@ -81,7 +80,6 @@ type alias Cell =
     , content : String
     , imageSrc : String
     , imageHidden : Bool
-    , cartoon : String
     , state : String
     , locked : Bool
     , selected : Bool
@@ -134,7 +132,6 @@ createCell index =
     , content = getContent row col
     , imageSrc = ""
     , imageHidden = True
-    , cartoon = getImage row col
     , state = state.initial
     , locked = False
     , selected = False
